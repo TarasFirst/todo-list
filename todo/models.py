@@ -19,4 +19,4 @@ class Task(models.Model):
         return self.content
 
     class Meta:
-        ordering = ['is_done', '-created_at']
+        ordering = ["is_done", "-created_at"]

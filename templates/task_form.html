@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if form.instance.pk %}
+    Edit Task
+{% else %}
+    Add Task
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<h2>
+    {% if form.instance.pk %}
+        Edit Task
+    {% else %}
+        Add Task
+    {% endif %}
+</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        {{ form.non_field_errors }}
+        <div class="mb-3">
+            <label for="content" class="form-label">Task Content</label>
+            {{ form.content }}
+            {{ form.content.errors }}
+        </div>
+        <div class="mb-3">
+            <label for="deadline" class="form-label">Deadline</label>
+            {{ form.deadline }}
+            {{ form.deadline.errors }}
+        </div>
+        <div class="mb-3">
+            <label for="tags" class="form-label">Tags</label>
+            {{ form.tags }}
+            {{ form.tags.errors }}
+        </div>
+        <div class="mb-3 form-check">
+            {{ form.is_done }}
+            <label class="form-check-label" for="is_done">Is Done</label>
+            {{ form.is_done.errors }}
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        {% if form.instance.pk %}
+            Save Changes
+        {% else %}
+            Add Task
+        {% endif %}
+    </button>
+    <a href="{% url 'todo:home' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

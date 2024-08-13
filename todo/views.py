@@ -1,5 +1,12 @@
 from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, RedirectView, View
+from django.views.generic import (
+    ListView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+    RedirectView,
+    View,
+)
 from todo.models import Task, Tag
 from todo.forms import TaskForm, TagForm
 from django.urls import reverse_lazy
@@ -63,7 +70,7 @@ class CompleteTaskView(View):
         task = get_object_or_404(Task, pk=pk)
         task.is_done = True
         task.save()
-        return redirect('todo:home')
+        return redirect("todo:home")
 
 
 class UndoTaskView(View):
@@ -71,4 +78,4 @@ class UndoTaskView(View):
         task = get_object_or_404(Task, pk=pk)
         task.is_done = False
         task.save()
-        return redirect('todo:home')
+        return redirect("todo:home")
