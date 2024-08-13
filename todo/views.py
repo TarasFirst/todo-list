@@ -65,7 +65,7 @@ class TagDeleteView(DeleteView):
 
 
 class CompleteTaskView(View):
-    def get(self, request, pk):
+    def post(self, request, pk):
         task = get_object_or_404(Task, pk=pk)
         task.is_done = True
         task.save()
@@ -73,7 +73,7 @@ class CompleteTaskView(View):
 
 
 class UndoTaskView(View):
-    def get(self, request, pk):
+    def post(self, request, pk):
         task = get_object_or_404(Task, pk=pk)
         task.is_done = False
         task.save()

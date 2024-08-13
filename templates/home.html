@@ -3,46 +3,52 @@
 {% block title %}TODO List{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-3">
+  <div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="mb-0">TODO List</h1>
     <a href="{% url 'todo:task_add' %}" class="btn btn-primary">Add task</a>
-</div>
+  </div>
 
-<ul class="list-group">
+  <ul class="list-group">
     {% for task in tasks %}
-    <li class="list-group-item">
+      <li class="list-group-item">
         <div class="d-flex justify-content-between align-items-center">
-            <div>
-                <h5>{{ task.content }}</h5>
-                <p class="mb-0">Created: {{ task.created_at|date:"F d, Y, g:i a" }}</p>
-                {% if task.deadline %}
-                <p class="mb-0">Deadline: {{ task.deadline|date:"F d, Y, g:i a" }}</p>
-                {% endif %}
-                <p class="mb-0">Tags: {% for tag in task.tags.all %}{{ tag.name }}{% if not forloop.last %},{% endif %} {% endfor %}</p>
-            </div>
-            <div>
-                {% if task.is_done %}
-                <span class="text-success">Done</span>
-                {% else %}
-                <span class="text-danger">Not done</span>
-                {% endif %}
-            </div>
+          <div>
+            <h5>{{ task.content }}</h5>
+            <p class="mb-0">Created: {{ task.created_at|date:"F d, Y, g:i a" }}</p>
+            {% if task.deadline %}
+              <p class="mb-0">Deadline: {{ task.deadline|date:"F d, Y, g:i a" }}</p>
+            {% endif %}
+            <p class="mb-0">Tags:
+              {% for tag in task.tags.all %}{{ tag.name }}{% if not forloop.last %},{% endif %} {% endfor %}</p>
+          </div>
+          <div>
+            {% if task.is_done %}
+              <span class="text-success">Done</span>
+            {% else %}
+              <span class="text-danger">Not done</span>
+            {% endif %}
+          </div>
         </div>
         <div class="d-flex justify-content-between align-items-center mt-2">
-            <div>
-                <a href="{% url 'todo:task_update' task.id %}" class="btn btn-link">Update</a>
-                <a href="{% url 'todo:task_delete' task.id %}" class="btn btn-link text-danger">Delete</a>
-            </div>
-            <div>
-                {% if task.is_done %}
-                <a href="{% url 'todo:task_undo' task.id %}" class="btn btn-secondary">Undo</a>
-                {% else %}
-                <a href="{% url 'todo:task_complete' task.id %}" class="btn btn-success">Complete</a>
-                {% endif %}
-            </div>
+          <div>
+            <a href="{% url 'todo:task_update' task.id %}" class="btn btn-link">Update</a>
+            <a href="{% url 'todo:task_delete' task.id %}" class="btn btn-link text-danger">Delete</a>
+          </div>
+          <div>
+            {% if task.is_done %}
+              <form method="post" action="{% url 'todo:task_undo' task.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-secondary">Undo</button>
+              </form>
+            {% else %}
+              <form method="post" action="{% url 'todo:task_complete' task.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Complete</button>
+              </form>                {% endif %}
+          </div>
         </div>
-    </li>
+      </li>
     {% endfor %}
-</ul>
+  </ul>
 {% endblock %}
 
