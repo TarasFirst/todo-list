@@ -38,11 +38,5 @@ python manage.py runserver
 
 ### Some pages
 
-![add_tag.png](images_for_README/add_tag.png)
-![confirm_del_tag.png](images_for_README/confirm_del_tag.png)
-![confirm_del_task.png](images_for_README/confirm_del_task.png)
-![edit_tag.png](images_for_README/edit_tag.png)
-![edit_task.png](images_for_README/edit_task.png)
-![home.png](images_for_README/home.png)
-![tags.png](images_for_README/tags.png)
-![todo_list.png](images_for_README/todo_list.png)
+
+![img.png](images_for_README/home.png)
