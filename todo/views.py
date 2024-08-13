@@ -4,7 +4,6 @@ from django.views.generic import (
     CreateView,
     UpdateView,
     DeleteView,
-    RedirectView,
     View,
 )
 from todo.models import Task, Tag
@@ -16,7 +15,7 @@ class TaskListView(ListView):
     model = Task
     template_name = "home.html"
     context_object_name = "tasks"
-    ordering = ["is_done", "-created_at"]  # Order by not done first, then by newest
+    ordering = ["is_done", "-created_at"]
 
 
 class TaskCreateView(CreateView):
