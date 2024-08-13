@@ -1,22 +1,23 @@
-from django.db import models
+from django import forms
+from .models import Task, Tag
 
 
-class Tag(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-
-    def __str__(self):
-        return self.name
-
-
-class Task(models.Model):
-    content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    deadline = models.DateTimeField(null=True, blank=True)
-    is_done = models.BooleanField(default=False)
-    tags = models.ManyToManyField(Tag, related_name="tasks")
-
-    def __str__(self):
-        return self.content
-
+class TaskForm(forms.ModelForm):
     class Meta:
-        ordering = ['is_done', '-created_at']
+        model = Task
+        fields = ['content', 'deadline', 'tags', 'is_done']
+        widgets = {
+            'content': forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+            'deadline': forms.DateTimeInput(attrs={"class": "form-control", "type": "datetime-local"}),
+            'tags': forms.SelectMultiple(attrs={"class": "form-control"}),
+            'is_done': forms.CheckboxInput(attrs={"class": "form-check-input"}),
+        }
+
+
+class TagForm(forms.ModelForm):
+    class Meta:
+        model = Tag
+        fields = ['name']
+        widgets = {
+            'name': forms.TextInput(attrs={"class": "form-control"}),
+        }
